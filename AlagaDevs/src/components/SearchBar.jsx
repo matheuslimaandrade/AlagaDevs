@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import '../styles/App.css';
 
-const SearchBar = ({ setPosition, setZoom }) =>
+const SearchBar = ({ setPosition, setZoom, setMarkerPosition }) =>
 {
     const [query, setQuery] = useState('');
 
@@ -23,8 +23,10 @@ const SearchBar = ({ setPosition, setZoom }) =>
                 if (response.data.length > 0)
                 {
                     const { lat, lon } = response.data[0];
-                    setPosition([parseFloat(lat), parseFloat(lon)]);
-                    setZoom(15);
+                    const newPosition = [parseFloat(lat), parseFloat(lon)];
+                    setPosition(newPosition);
+                    setZoom(15); // Ajustar o nível de zoom
+                    setMarkerPosition(newPosition); // Definir a posição do marcador
                 } else
                 {
                     alert('Bairro não encontrado.');

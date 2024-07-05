@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaBars } from 'react-icons/fa';
 import SearchBar from './components/SearchBar';
 import MapView from './components/MapView';
+import CameraIcon from './components/CameraIcon';
 import './styles/App.css';
 
 const App = () =>
@@ -12,11 +13,20 @@ const App = () =>
 
   return (
     <div className="app-container">
+      <header className="app-header">
+        <div className="menu-icon">
+          <FaBars size={24} />
+        </div>
+        <div className="profile-icon">
+          <FaUserCircle size={32} />
+        </div>
+      </header>
       <SearchBar setPosition={setPosition} setZoom={setZoom} setMarkerPosition={setMarkerPosition} />
-      <div className="profile-icon">
-        <FaUserCircle size={32} />
-      </div>
       <MapView position={position} zoom={zoom} markerPosition={markerPosition} />
+      <div className="footer">
+        <button className="footer-button">Acompanhe seus locais</button>
+        <CameraIcon />
+      </div>
     </div>
   );
 };

@@ -29,6 +29,8 @@ const MapView = ({ position, zoom, markerPosition }) =>
         { id: 19, position: [-8.030, -34.908], level: 1 },
         { id: 20, position: [-8.033, -34.963], level: 2 },
         { id: 21, position: [-8.020, -34.956], level: 3 },
+        { id: 23, position: [-8.117, -34.915], level: 2 },   // Zona Sul
+        { id: 24, position: [-8.125, -34.910], level: 3 },   // Zona Sul
     ];
 
     const icon = new L.DivIcon({
