@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
-import SearchBar from './SearchBar';
-import MapView from './MapView';
-import './App.css';
+import SearchBar from './components/SearchBar';
+import MapView from './components/MapView';
+import './styles/App.css';
 
 const App = () =>
 {
