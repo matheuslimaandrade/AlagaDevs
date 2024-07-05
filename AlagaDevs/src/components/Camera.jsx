@@ -16,11 +16,11 @@ const getColor = (level) =>
 {
     switch (level)
     {
-        case "Sem Alagamento":
+        case "1":
             return 'green';
-        case "Com água na via":
+        case "2":
             return 'yellow';
-        case "Via Alagada":
+        case "3":
             return 'red';
         default:
             return 'blue';
