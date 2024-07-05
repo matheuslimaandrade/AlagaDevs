@@ -16,11 +16,11 @@ const getColor = (level) =>
 {
     switch (level)
     {
-        case 1:
+        case "Sem Alagamento":
             return 'green';
-        case 2:
+        case "Com água na via":
             return 'yellow';
-        case 3:
+        case "Via Alagada":
             return 'red';
         default:
             return 'blue';
@@ -35,7 +35,7 @@ const Camera = ({ camera }) =>
         <>
             <Marker position={position} icon={cameraIconImg}>
                 <Popup>
-                    <span>Nível de Chuva: {level}</span>
+                    <span>Estado de Alagamento: {level}</span>
                 </Popup>
             </Marker>
             <Circle

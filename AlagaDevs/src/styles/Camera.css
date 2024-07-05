@@ -36,3 +36,13 @@
         opacity: 0.7;
     }
 }
+
+.custom-div-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    color: white;
+}

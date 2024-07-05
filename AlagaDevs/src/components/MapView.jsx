@@ -1,12 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import Camera from './Camera';
 import SetViewOnClick from './SetViewOnClick';
+import Abrigo from './Abrigo';
 import L from 'leaflet';
+
+const cameraIconImg = new L.Icon({
+    iconUrl: 'path/to/camera-icon.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+});
 
 const MapView = ({ position, zoom, markerPosition }) =>
 {
+    const [abrigos, setAbrigos] = useState([]);
+
+    useEffect(() =>
+    {
+        const fetchAbrigos = async () =>
+        {
+            try
+            {
+                const response = await fetch(
+                    'http://dados.recife.pe.gov.br/pt_BR/api/3/action/datastore_search?resource_id=4f318be2-007e-4884-98fc-ef2cea34d6ee&limit=100'
+                );
+                const data = await response.json();
+                setAbrigos(data.result.records);
+            } catch (error)
+            {
+                console.error('Erro ao buscar dados dos abrigos:', error);
+            }
+        };
+
+        fetchAbrigos();
+    }, []);
+
     const cameras = [
         { id: 1, position: [-8.063, -34.894], level: 1 },
         { id: 2, position: [-8.048, -34.919], level: 2 },
@@ -29,16 +59,12 @@ const MapView = ({ position, zoom, markerPosition }) =>
         { id: 19, position: [-8.030, -34.908], level: 1 },
         { id: 20, position: [-8.033, -34.963], level: 2 },
         { id: 21, position: [-8.020, -34.956], level: 3 },
-        { id: 23, position: [-8.117, -34.915], level: 2 },   // Zona Sul
-        { id: 24, position: [-8.125, -34.910], level: 3 },   // Zona Sul
-    ];
+        { id: 23, position: [-8.117, -34.915], level: 2 },
+        { id: 24, position: [-8.125, -34.910], level: 3 },
+        { id: 25, position: [-8.130, -34.910], level: 1 },
+        { id: 26, position: [-8.140, -34.910], level: 2 },
 
-    const icon = new L.DivIcon({
-        className: 'custom-div-icon',
-        html: "<div style='background-color:#2ecc71; width:24px; height:24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white;'>V</div>",
-        iconSize: [24, 24],
-        iconAnchor: [12, 24]
-    });
+    ];
 
     return (
         <MapContainer
@@ -47,18 +73,20 @@ const MapView = ({ position, zoom, markerPosition }) =>
             style={{ height: '100vh', width: '100%' }}
         >
             <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
 
             <SetViewOnClick position={position} zoom={zoom} />
 
-            {markerPosition && (
-                <Marker position={markerPosition} icon={icon} />
-            )}
+            {markerPosition && <Marker position={markerPosition} icon={cameraIconImg} />}
 
             {cameras.map((camera) => (
                 <Camera key={camera.id} camera={camera} />
+            ))}
+
+            {abrigos.map((abrigo) => (
+                <Abrigo key={abrigo._id} abrigo={abrigo} />
             ))}
         </MapContainer>
     );
